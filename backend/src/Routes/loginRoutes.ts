@@ -1,64 +1,81 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { Login } from "../models/Login";
-import { IUser } from "../types/types";
-import bcrypt from 'bcrypt'
+import { ILogin } from "../types/types";
+import * as bcrypt from 'bcrypt'
 
 export const loginRoutes = Router();
 
+const logins:ILogin[] = []
 
-loginRoutes.post('/', async (req, res) => {
-  const { email, password } = req.body;
 
-  const usuario = Login.find(usuario => email.name === req.body.name)
-  if(usuario == null) {
+// Criptografar senha
+loginRoutes.post('/', async (req : Request, res : Response) => {
+
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    const login = { username: req.body.username, password: hashedPassword };
+    logins.push(login)
+    res.status(201).send()
+  } catch {
+    res.status(500).send()
+  }
+})
+
+
+// Comparar login
+loginRoutes.post('/auth', async (req : Request, res : Response) => {
+  const user = logins.find(user => user.username === req.body.username)
+  if(user == null) {
     return res.status(400).send('Usuário não foi encontrado')
   }
 
-  // try {
-  //   if(await bcrypt.compare(req.body.password, usuario.password)) {
-  //     res.send('Success')
-  //   } else {
-  //     res.send('Not Allowed')
-  //   }
-  // } catch (error) {
-  //   res.status(500).send()
-  // }
-
-  if (!email || !password) {
-    res.status(422).json({ error: "Preencha todos os campos" });
-    return;
+  try {
+    if(await bcrypt.compare(req.body.password, user.password)) {
+      res.send('Success')
+    } else {
+      res.send('Not Allowed')
+    }
+  } catch (error) {
+    res.status(500).send()
   }
 })
 
 
 // CREATE LOGIN
-// loginRoutes.post("/", async (req, res) => {
-//   const { username, password } = req.body;
+loginRoutes.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-//   if (!username || !password) {
-//     res.status(422).json({ error: "Campos obrigatórios" });
-//     return;
-//   }
+  // const passwordHash = await bcrypt.hash(password, 10)
 
-//   const login = { username, password };
+  if (!username || !password) {
+    res.status(422).json({ error: "Campos obrigatórios" });
+    return;
+  }
+
+  // const login = await getRepository(Login).save({
+  //   username,
+  //   password: passwordHash
+  // })
+
+  const login = { username, password };
 
 
-//   try {
-//     // criando dados
-//     await Login.create(login);
+  try {
+    // criando dados
+    await Login.create(login);
 
-//     res.status(201).json({ message: "Usuário criado" });
-//   } catch (error) {
-//     res.status(500).json({ error: error });
-//   }
-// });
+    res.status(201).json({ message: "Usuário criado" });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
 
 
 // READ LOGIN
 loginRoutes.get("/", async (req, res) => {
   try {
-    const logins = await Login.find();
-    res.status(200).json(logins);
+    const login = await Login.find();
+    res.status(200).json(login);
   } catch (error) {
     res.status(500).json({ error: error });
   }

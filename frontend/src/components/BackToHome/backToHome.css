@@ -2,7 +2,7 @@
     position: fixed;
     inset: 0;
     width: 20vw;
-    height: 10vw;
+    height: 5vw;
     margin: 20px;
     cursor: pointer;
     animation: pulse 2s ease-in-out infinite;
