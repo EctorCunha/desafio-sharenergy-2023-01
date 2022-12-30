@@ -1,0 +1,4 @@
+
+
+* Ajustar layout
+* Ajustar funcionalidades. Ex: Img sem status code.

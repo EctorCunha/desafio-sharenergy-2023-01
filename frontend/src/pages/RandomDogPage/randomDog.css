@@ -1,0 +1,29 @@
+.randomDogContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #533d3d;
+}
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: .8rem;
+    margin: 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.imagem{
+    width: 50%;
+    height: 50%;
+    border-radius: 5px;
+}

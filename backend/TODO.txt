@@ -1,0 +1,8 @@
+
+
+
+* Definir as rotas de login e de Home (cadastrar novos usuários)
+* Criptografar senha quando realizar cadastro
+* Fazer comparação para autenticação do login
+* Fazer funcionar o remember-me
+* Fazer API com paginação

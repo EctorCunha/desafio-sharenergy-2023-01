@@ -1,0 +1,49 @@
+#crudContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40vw;
+    height: 20vh;
+    margin: 10rem 0 4rem 0;
+}
+
+
+.section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    height: 100vh;
+    margin-bottom: 2rem;
+}
+
+.tilteCrud{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.crudCards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+    justify-items: center;
+    width: 90vw;
+    height: 100vh;
+    margin-bottom: 2rem;
+}
+
+.userInfos{
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #bfc98b;
+    border: dotted 1px #fff;
+}
