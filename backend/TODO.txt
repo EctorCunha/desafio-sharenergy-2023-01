@@ -1,7 +1,11 @@
 
+## Fazer mudança na rota User e Cadastro
+* User: nome completo, foto, email, username e idade.
+* Cadastro: Nome, email, telefone, endereço e cpf.
+
+Rota protegida para lista de usuários após login (list page)
 
 
-* Definir as rotas de login e de Home (cadastrar novos usuários)
 * Criptografar senha quando realizar cadastro
 * Fazer comparação para autenticação do login
 * Fazer funcionar o remember-me
