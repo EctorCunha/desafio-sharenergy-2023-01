@@ -5,9 +5,8 @@ import edit from "../../assets/edit.svg";
 import trash from "../../assets/trash.svg";
 import "./crudPage.css";
 
-
 interface IUser {
-  id?: string;
+  _id: string;
   fullName: string;
   photo: string;
   email: string;
@@ -24,6 +23,7 @@ interface IUser {
 // }
 
 const initialValues: IUser = {
+  _id: "",
   fullName: "",
   photo: "",
   email: "",
@@ -60,8 +60,8 @@ export function CrudPage() {
         setAtualize(!atualize);
       });
       setValues(initialValues);
-    } catch (error) {
-      alert("Houve um erro");
+    } catch {
+      alert("Houve um erro ao inserir os dados");
     }
   }
 
@@ -69,17 +69,39 @@ export function CrudPage() {
     setClickedEdit(!clickedEdit);
   }
 
-
-  function handleUpdateUser(id: string): void {
-    axios.put(`http://localhost:5000/user/${id}`, values).then(() => {
-    });
-    setClickedEdit(!clickedEdit);
+  function handleEditUser(id:any):void {
+    fetch(`http://localhost:5000/user/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(selectedCard),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSelectedCard(data);
+        setAtualize(!atualize);
+        setClickedEdit(!clickedEdit);
+      });
   }
 
-  function Edit(){
-    modalClickEdit()
-    handleUpdateUser(selectedCard._id)
+  // function handleUpdateUser(id: string):void {
+  //   try {
+  //     axios.patch(`http://localhost:5000/user/${id}`, values).then(() => {
+  //       setAtualize(!atualize);
+  //     });
+  //     setClickedEdit(!clickedEdit);
+  //   } catch {
+  //     alert("Houve um erro ao atualizar os dados");
+  //   }
+  // }
+
+  function onEditChange(ev: any) {
+    const { name, value } = ev.target;
+    setSelectedCard({ ...selectedCard, [name]: value });
   }
+
+  console.log(selectedCard);
 
   function handleDeleteUser(id: string): void {
     if (confirm("Deseja mesmo excluir este card ?")) {
@@ -96,7 +118,7 @@ export function CrudPage() {
 
   return (
     <section className="section">
-        <BackToHome />
+      <BackToHome />
 
       <div className="formContainer">
         <form className="formCrud">
@@ -114,11 +136,18 @@ export function CrudPage() {
             onChange={onChange}
             name="photo"
             type="text"
-            placeholder="Foto"
+            placeholder="Foto url"
             value={values.photo}
           />
+          {/* <input 
+          type="file" 
+          accept="image/*"
+          name="photo" 
+          id="photo"
+          value={values.photo} 
+          /> */}
           <input
-          className="inputCrud"
+            className="inputCrud"
             onChange={onChange}
             name="email"
             type="text"
@@ -126,7 +155,7 @@ export function CrudPage() {
             value={values.email}
           />
           <input
-          className="inputCrud"
+            className="inputCrud"
             onChange={onChange}
             name="username"
             type="text"
@@ -134,7 +163,7 @@ export function CrudPage() {
             value={values.username}
           />
           <input
-          className="inputCrud"
+            className="inputCrud"
             onChange={onChange}
             name="age"
             type="text"
@@ -142,9 +171,9 @@ export function CrudPage() {
             value={values.age}
           />
           <div className="formBtn">
-          <button className="btnCrud" onClick={handleAddUser} type="submit">
-            Adicionar
-          </button>
+            <button className="btnCrud" onClick={handleAddUser} type="submit">
+              Adicionar
+            </button>
           </div>
         </form>
       </div>
@@ -156,78 +185,90 @@ export function CrudPage() {
             className="userInfos"
             key={user.email}
           >
-              <h1 className="fullName">Nome Completo: {user.fullName}</h1>
-              <img className="cardImg" src={user.photo} />
-              <p aria-required >E-mail: {user.email}</p>
-              <p>Username: {user.username}</p>
-              <p>Idade: {user.age}</p>
-              <div className="icons">
-                <img
-                  // onClick={() => handleUpdateUser(values.id)}
-                  onClick={Edit}
-                  className="icon"
-                  src={edit}
-                  alt="Icone de editar"
-                />
-                <img
-                  onClick={()=>handleDeleteUser(user._id!)}
-                  className="icon delete"
-                  src={trash}
-                  alt="Icone de excluir"
-                />
-              </div>
-              <span>-------------</span>
+            <h1 className="fullName">Nome Completo: {user.fullName}</h1>
+            <img className="cardImg" src={user.photo} />
+            <p aria-required>E-mail: {user.email}</p>
+            <p>Username: {user.username}</p>
+            <p>Idade: {user.age}</p>
+            <div onClick={() => setSelectedCard(user)} className="icons">
+              <img
+                onClick={modalClickEdit}
+                className="icon"
+                src={edit}
+                alt="Icone de editar"
+              />
+              <img
+                onClick={() => handleDeleteUser(user._id!)}
+                className="icon delete"
+                src={trash}
+                alt="Icone de excluir"
+              />
             </div>
+            <span>-------------</span>
+          </div>
         ))}
       </div>
 
       {clickedEdit ? (
-        <div className="modalContainer" data-backdrop='static'>
+        <div className="modalContainer">
           <div className="modal">
-          <h1>Atualização dos dados</h1>
-          <input
-            name="fullName"
-            type="text"
-            placeholder="Nome Completo"
-            value={selectedCard.fullName}
-            onChange={(e) => setSelectedCard(e.target.value)}
-          />
-          <input
-            name="photo"
-            type="text"
-            placeholder="Foto"
-            value={selectedCard.photo}
-            onChange={(e) => setSelectedCard(e.target.value)}
-          />
-          <input
-            name="email"
-            type="text"
-            placeholder="E-mail"
-            value={selectedCard.email}
-            onChange={(e) => setSelectedCard(e.target.value)}
-          />
-          <input
-            name="username"
-            type="text"
-            placeholder="Username"
-            value={selectedCard.username}
-            onChange={(e) => setSelectedCard(e.target.value)}
-          />
-          <input
-            name="age"
-            type="text"
-            placeholder="Idade"
-            value={selectedCard.age}
-            onChange={(e) => setSelectedCard(e.target.value)}
-          />
+            <h1 className="EditTitle">Atualização dos dados</h1>
+            <input
+              className="inputCrud"
+              name="fullName"
+              type="text"
+              placeholder="Nome Completo"
+              value={selectedCard.fullName}
+              onChange={onEditChange}
+            />
+            <input
+              className="inputCrud"
+              name="photo"
+              type="text"
+              placeholder="Foto"
+              value={selectedCard.photo}
+              onChange={onEditChange}
+            />
+            <input
+              className="inputCrud"
+              name="email"
+              type="text"
+              placeholder="E-mail"
+              value={selectedCard.email}
+              onChange={onEditChange}
+            />
+            <input
+              className="inputCrud"
+              name="username"
+              type="text"
+              placeholder="Username"
+              value={selectedCard.username}
+              onChange={onEditChange}
+            />
+            <input
+              className="inputCrud"
+              name="age"
+              type="number"
+              placeholder="Idade"
+              value={selectedCard.age}
+              onChange={onEditChange}
+            />
 
-          <div className="btnEdit">
-            <button onClick={() => handleUpdateUser(selectedCard._id)}>
-              Atualizar
-            </button>
-            <button onClick={() => setClickedEdit(false)}>Fechar</button>
+            <div className="btnEditContainer">
+              <button
+                className="buttonEdit"
+                onClick={()=>handleEditUser(selectedCard._id)}
+              >
+                Atualizar
+              </button>
+              <button
+                className="buttonEdit editClose"
+                onClick={() => setClickedEdit(false)}
+              >
+                Fechar
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       ) : null}
     </section>

@@ -1,138 +1,170 @@
-.section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90vw;
-    height: 100vh;
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 90vw;
 }
 
-.formContainer{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 1rem;
-    justify-items: center;
-    width: 70vw;
-    padding: 1rem;
-    margin: 10rem 0 2rem 0;
+.formContainer {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
+  padding: 1rem;
+  margin: 10rem 0 2rem 0;
+  background-color: aqua;
 }
 
-.titleCrud{
+.formCrud {
+  text-align: center;
+  background-color: rgb(95, 44, 99);
+}
+
+.titleCrud {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 1.5rem;
+}
+
+.inputCrud {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 40%;
+  height: 2rem;
+  margin: 0.5rem;
+}
+
+.inputCrud:focus {
+  outline: none;
+}
+
+.formBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+  margin: 1rem;
+}
+
+.btnCrud {
+  width: 70%;
+  height: 2rem;
+  margin: auto;
+  background-color: #bfc98b;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.crudCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 1rem;
+  justify-items: center;
+  width: 90vw;
+  margin-bottom: 2rem;
+}
+
+.userInfos {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #bfc98b;
+  border: dotted 1px #fff;
+  border-radius: 8px;
+}
+
+.fullName {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.cardImg {
+  width: 10rem;
+  object-fit: cover;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  height: 2rem;
+}
+
+.icon {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.533);
+  position: fixed;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80vw;
+  height: 50vh;
+  background-color: rgb(28, 26, 26);
+  position: fixed;
+  border-radius: 8px;
+}
+
+.EditTitle{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
     color: #fff;
     margin: 1.5rem;
 }
 
-.inputCrud{
-    border: none;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    width: 40%;
-    height: 2rem;
-    margin: 0.5rem;
+.btnEditContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  gap: .5rem;
+  margin-top: .5rem;
 }
 
-.inputCrud:focus{
-    outline: none;
-}
-
-.formBtn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
-    height: 2rem;
-    margin: 1rem;
-}
-
-.btnCrud{
+.buttonEdit{
     width: 100%;
     height: 2rem;
     margin: auto;
-    background-color: #bfc98b;
+    background-color: #6dbb5a;
     border: none;
     border-radius: 0.5rem;
     color: #fff;
-    font-size: 1rem;
+    font-size: min(1.5rem, 1.5vw);
     font-weight: bold;
     cursor: pointer;
 }
 
-.crudCards{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 1rem;
-    justify-items: center;
-    width: 90vw;
-    height: 100vh;
-    margin-bottom: 2rem;
-}
-
-.userInfos{
-    width: 40vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #bfc98b;
-    border: dotted 1px #fff;
-    border-radius: 8px;
-}
-
-.fullName{
-    font-size: 1rem;
-    font-weight: normal;
-}
-
-.cardImg{
-    width: 50%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.icons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    height: 2rem;
-}
-
-.icon{
-    cursor: pointer;
-    width: 2rem;
-    height: 2rem;
-    margin: 0 0.5rem 0 0.5rem;
-}
-
-.modalContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: transparent;
-    position: fixed;
-}
-
-.modal{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 80vw;
-    height: 50vh;
-    background-color: rgb(215, 208, 208);
-    position: fixed;
-}
-
-.btnEdit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.editClose{
+    background-color: #cd6311;
 }

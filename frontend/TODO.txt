@@ -2,4 +2,4 @@
 
 * Ajustar layout
 * Ajustar funcionalidades. Ex: Img sem status code.
-* Qnd vai editar e salvar, ele não guarda o que já existe, assim limpando todos os campos.
+* Fazer validações para criação de card. Ex: Email obrigatório.
