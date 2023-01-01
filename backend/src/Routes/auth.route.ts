@@ -5,7 +5,6 @@ import { ILogin } from "../types/types";
 
 export const authRoute = Router();
 
-// const logins: ILogin[] = [];
 
 // Comparar login
 authRoute.post("/login", async (req: Request, res: Response) => {
@@ -13,6 +12,10 @@ authRoute.post("/login", async (req: Request, res: Response) => {
 
   try {
     const user = await loginService(username);
+
+    if(!user){
+        return res.status(401).json({ message: "Usuário não encontrado" });
+    }
 
     if (user !== null) {
       const passwordIsValid = bcrypt.compareSync(password, user.password);
@@ -26,20 +29,3 @@ authRoute.post("/login", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Usuário não foi encontrado" });
   }
 });
-
-// authRoute.post('/login', async (req : Request, res : Response) => {
-//     const user = logins.find(user => user.username === req.body.username)
-//     const password = logins.find(user => user.password === req.body.password)
-
-//     if(user == null) {
-//         return res.status(400).json({message:'Usuário não foi encontrado'})
-//     }
-
-//     if(password == null) {
-//         return res.status(400).json({message:'Senha não foi encontrada'})
-//     }
-// })
-
-// authRoute.post('/login', async (req : Request, res : Response) => {
-//     res.json({message:'Login ok'})
-// })
