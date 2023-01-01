@@ -2,13 +2,9 @@
 ## GERAL
 * Ajustar layout
 
-
-
 ## STATUS CODE
 * Ajustar funcionalidades. Ex: Img sem status code.
 
-
-
-## CRUD
-* Fazer validações para criação de card. Ex: Email obrigatório.
-* Campos: Nome, email, telefone, endereço e cpf.
+## Login
+* Trocar a rota listPage (rota protegida)
+* Login (autenticação usando a rota auth/login)

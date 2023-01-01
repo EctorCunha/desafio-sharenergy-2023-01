@@ -5,14 +5,13 @@ import edit from "../../assets/edit.svg";
 import trash from "../../assets/trash.svg";
 import "./crudPage.css";
 
-interface IUser {
+interface IRegister {
   _id: string;
-  fullName: string;
-  photo: string;
-  email: string;
-  username: string;
-  password?: string;
-  age: number | string;
+  name: string;
+  email: string | any;
+  telephone: string;
+  address: string;
+  cpf: string | any;
 }
 
 // interface IFunctions {
@@ -22,25 +21,25 @@ interface IUser {
 //   handleDeleteUser: (id:string) => void,
 // }
 
-const initialValues: IUser = {
+const initialValues: IRegister = {
   _id: "",
-  fullName: "",
-  photo: "",
+  name: "",
   email: "",
-  username: "",
-  age: "",
+  telephone: "",
+  address: "",
+  cpf: "",
 };
 
 export function CrudPage() {
-  const [userData, setUserData] = useState([] as IUser[]);
+  const [userData, setUserData] = useState([] as IRegister[]);
   const [values, setValues] = useState(initialValues);
   const [atualize, setAtualize] = useState(false);
   const [clickedEdit, setClickedEdit] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({} as IUser);
+  const [selectedCard, setSelectedCard] = useState({} as IRegister);
 
   function getData() {
     try {
-      axios.get("http://localhost:5000/user").then((response) => {
+      axios.get("http://localhost:5000/register").then((response) => {
         setUserData(response.data);
       });
     } catch (error) {
@@ -53,24 +52,57 @@ export function CrudPage() {
     setValues({ ...values, [name]: value });
   }
 
-  function handleAddUser(e: any) {
-    e.preventDefault();
-    try {
-      axios.post("http://localhost:5000/user", values).then(() => {
-        setAtualize(!atualize);
-      });
-      setValues(initialValues);
-    } catch {
-      alert("Houve um erro ao inserir os dados");
-    }
-  }
+  const messageCPF = "O CPF deve conter 11 dígitos";
+  const messageCPF2 = "Não pode ser maior que 11 dígitos";
+  const messageEmail = "O email deve conter @ e .";
+  const erro = document.querySelector("#erro");
+  const erroEmail = document.querySelector("#erroEmail");
+  const classMsgSuccess = document.querySelector(".msgSuccess");
+  const msgSuccess = document.querySelector(".msg");
+
 
   function modalClickEdit() {
     setClickedEdit(!clickedEdit);
   }
 
-  function handleEditUser(id:any):void {
-    fetch(`http://localhost:5000/user/${id}`, {
+  function onEditChange(ev: any) {
+    const { name, value } = ev.target;
+    setSelectedCard({ ...selectedCard, [name]: value });
+  }
+
+
+  function handleAddUser(e: any) {
+    e.preventDefault();
+    try {
+      axios.post("http://localhost:5000/register", values).then(() => {
+        setAtualize(!atualize);
+      });
+      setValues(initialValues);
+      // msgSuccess?.classList.add("msgSuccess");
+    } catch {
+      alert("Houve um erro ao inserir os dados");
+    }
+
+    // if(msgSuccess){
+    //   setTimeout(() => {
+    //     msgSuccess.classList.remove("msgSuccess");
+    //   }, 3000);
+    // }
+
+    if (values.cpf.length < 11) {
+      erro.textContent = messageCPF;
+    } else if(values.cpf.length > 12){
+      erro.textContent = messageCPF2
+    } 
+
+    if (values.email.length === 0) {
+      erroEmail.textContent = messageEmail;
+    } 
+  }
+
+
+  function handleEditUser(id: any): void {
+    fetch(`http://localhost:5000/register/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -82,34 +114,29 @@ export function CrudPage() {
         setSelectedCard(data);
         setAtualize(!atualize);
         setClickedEdit(!clickedEdit);
+        msgSuccess?.classList.add("msgSuccess");
       });
-  }
+      
+      if(msgSuccess){
+        setTimeout(() => {
+          msgSuccess.classList.remove("msgSuccess");
+        }, 3000);
+      }
 
-  // function handleUpdateUser(id: string):void {
-  //   try {
-  //     axios.patch(`http://localhost:5000/user/${id}`, values).then(() => {
-  //       setAtualize(!atualize);
-  //     });
-  //     setClickedEdit(!clickedEdit);
-  //   } catch {
-  //     alert("Houve um erro ao atualizar os dados");
-  //   }
-  // }
+    }
 
-  function onEditChange(ev: any) {
-    const { name, value } = ev.target;
-    setSelectedCard({ ...selectedCard, [name]: value });
-  }
-
-  console.log(selectedCard);
-
+  
   function handleDeleteUser(id: string): void {
     if (confirm("Deseja mesmo excluir este card ?")) {
-      axios.delete(`http://localhost:5000/user/${id}`).then(() => {
+      axios.delete(`http://localhost:5000/register/${id}`).then(() => {
         setAtualize(!atualize);
       });
       return;
     }
+  }
+
+  if( !values.cpf){
+    handleAddUser = false
   }
 
   useEffect(() => {
@@ -123,53 +150,65 @@ export function CrudPage() {
       <div className="formContainer">
         <form className="formCrud">
           <h1 className="titleCrud">CRUD</h1>
+
+          <div className="inputErrorContainer">
           <input
             className="inputCrud"
             onChange={onChange}
-            name="fullName"
+            name="name"
             type="text"
-            placeholder="Nome Completo"
-            value={values.fullName}
+            placeholder="Nome"
+            value={values.name}
           />
+          </div>
+
+          <div className="inputErrorContainer">
+            <input
+              className="inputCrud"
+              onChange={onChange}
+              name="email"
+              type="email"
+              placeholder="E-mail *"
+              required
+              value={values.email}
+            />
+              <span id='erroEmail' style={{ color: "red", fontSize: ".8rem" }}></span>
+          </div>
+
+          <div className="inputErrorContainer">
           <input
             className="inputCrud"
             onChange={onChange}
-            name="photo"
+            name="telephone"
             type="text"
-            placeholder="Foto url"
-            value={values.photo}
+            placeholder="Telefone"
+            value={values.telephone}
           />
-          {/* <input 
-          type="file" 
-          accept="image/*"
-          name="photo" 
-          id="photo"
-          value={values.photo} 
-          /> */}
+          </div>
+
+          <div className="inputErrorContainer">
           <input
             className="inputCrud"
             onChange={onChange}
-            name="email"
+            name="address"
             type="text"
-            placeholder="E-mail"
-            value={values.email}
+            placeholder="Endereço"
+            value={values.address}
           />
-          <input
-            className="inputCrud"
-            onChange={onChange}
-            name="username"
-            type="text"
-            placeholder="Username"
-            value={values.username}
-          />
-          <input
-            className="inputCrud"
-            onChange={onChange}
-            name="age"
-            type="text"
-            placeholder="Idade"
-            value={values.age}
-          />
+          </div>
+
+          <div className="inputErrorContainer">
+            <input
+              className="inputCrud"
+              onChange={onChange}
+              name="cpf"
+              type="text"
+              placeholder="CPF *"
+              required
+              value={values.cpf}
+            />
+            <span id='erro' style={{ color: "red", fontSize: ".8rem" }}></span>
+          </div>
           <div className="formBtn">
             <button className="btnCrud" onClick={handleAddUser} type="submit">
               Adicionar
@@ -183,13 +222,13 @@ export function CrudPage() {
           <div
             onClick={() => setSelectedCard(user)}
             className="userInfos"
-            key={user.email}
+            key={user.cpf}
           >
-            <h1 className="fullName">Nome Completo: {user.fullName}</h1>
-            <img className="cardImg" src={user.photo} />
-            <p aria-required>E-mail: {user.email}</p>
-            <p>Username: {user.username}</p>
-            <p>Idade: {user.age}</p>
+            <h1 className="name">Nome: {user.name}</h1>
+            <p>E-mail: {user.email}</p>
+            <p>Telefone: {user.telephone}</p>
+            <p>Endereço: {user.address}</p>
+            <p aria-required>CPF: {user.cpf}</p>
             <div onClick={() => setSelectedCard(user)} className="icons">
               <img
                 onClick={modalClickEdit}
@@ -208,56 +247,90 @@ export function CrudPage() {
           </div>
         ))}
       </div>
+      
+      {/* <span className="msgAdd">Dados inseridos com sucesso</span> */}
+      <span className="msg">Dados atualizados com sucesso</span>
 
       {clickedEdit ? (
         <div className="modalContainer">
           <div className="modal">
             <h1 className="EditTitle">Atualização dos dados</h1>
-            <input
-              className="inputCrud"
-              name="fullName"
-              type="text"
-              placeholder="Nome Completo"
-              value={selectedCard.fullName}
-              onChange={onEditChange}
-            />
-            <input
-              className="inputCrud"
-              name="photo"
-              type="text"
-              placeholder="Foto"
-              value={selectedCard.photo}
-              onChange={onEditChange}
-            />
-            <input
-              className="inputCrud"
-              name="email"
-              type="text"
-              placeholder="E-mail"
-              value={selectedCard.email}
-              onChange={onEditChange}
-            />
-            <input
-              className="inputCrud"
-              name="username"
-              type="text"
-              placeholder="Username"
-              value={selectedCard.username}
-              onChange={onEditChange}
-            />
-            <input
-              className="inputCrud"
-              name="age"
-              type="number"
-              placeholder="Idade"
-              value={selectedCard.age}
-              onChange={onEditChange}
-            />
+            <div className="labelInputContainer">
+              <label className="labelEdit" htmlFor="name">
+                Nome:{" "}
+              </label>
+              <input
+                className="inputCrud"
+                name="name"
+                type="text"
+                placeholder="Nome"
+                value={selectedCard.name}
+                onChange={onEditChange}
+              />
+            </div>
+
+            <div className="labelInputContainer">
+              <label className="labelEdit" htmlFor="email">
+                Email:{" "}
+              </label>
+              <input
+                className="inputCrud"
+                name="email"
+                type="email"
+                placeholder="E-mail"
+                required
+                value={selectedCard.email}
+                onChange={onEditChange}
+              />
+            </div>
+
+            <div className="labelInputContainer">
+              <label className="labelEdit" htmlFor="telephone">
+                Telefone:{" "}
+              </label>
+              <input
+                className="inputCrud"
+                name="telephone"
+                type="text"
+                placeholder="Telefone"
+                value={selectedCard.telephone}
+                onChange={onEditChange}
+              />
+            </div>
+
+            <div className="labelInputContainer">
+              <label className="labelEdit" htmlFor="address">
+                Endereço:{" "}
+              </label>
+              <input
+                className="inputCrud"
+                name="address"
+                type="text"
+                placeholder="Endereço"
+                value={selectedCard.address}
+                onChange={onEditChange}
+              />
+            </div>
+
+            <div className="labelInputContainer">
+              <label className="labelEdit" htmlFor="fullcpfName">
+                CPF:{" "}
+              </label>
+              <input
+                className="inputCrud"
+                name="cpf"
+                type="string"
+                placeholder="CPF"
+                required
+                value={selectedCard.cpf}
+                onChange={onEditChange}
+              />
+            </div>
 
             <div className="btnEditContainer">
               <button
                 className="buttonEdit"
-                onClick={()=>handleEditUser(selectedCard._id)}
+                onClick={() => handleEditUser(selectedCard._id)}
               >
                 Atualizar
               </button>

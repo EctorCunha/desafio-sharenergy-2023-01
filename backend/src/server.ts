@@ -13,10 +13,4 @@ process.on('SIGINT', ()=>{
 })
 
 mongoose.connect(`mongodb+srv://sharenergy:sharenergy@ector-sharenergy.xnorzef.mongodb.net/?retryWrites=true&w=majority`)
-// .then(()=>{
-//     console.log("Conectamos ao MongoDB!")
-//     app.listen(5000);
-// }).catch(()=>{
-//     console.log('Erro ao conectar ao MongoDB')
-// })
 

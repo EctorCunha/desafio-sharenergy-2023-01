@@ -6,18 +6,19 @@
   width: 90vw;
 }
 
+/* Formulário */
 .formContainer {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   width: 100%;
   padding: 1rem;
-  margin: 10rem 0 2rem 0;
+  margin: 5rem 0 2rem 0;
   background-color: aqua;
 }
 
 .formCrud {
   text-align: center;
-  background-color: rgb(95, 44, 99);
+  background-color: rgb(57, 20, 60);
 }
 
 .titleCrud {
@@ -47,13 +48,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 2rem;
   margin: 1rem;
 }
 
 .btnCrud {
-  width: 70%;
+  width: 40%;
   height: 2rem;
   margin: auto;
   background-color: #bfc98b;
@@ -65,6 +65,15 @@
   cursor: pointer;
 }
 
+.inputErrorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Cards */
 .crudCards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -75,24 +84,18 @@
 }
 
 .userInfos {
-  width: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 20rem;
   background-color: #bfc98b;
-  border: dotted 1px #fff;
   border-radius: 8px;
 }
 
-.fullName {
+.name {
   font-size: 1rem;
   font-weight: normal;
-}
-
-.cardImg {
-  width: 10rem;
-  object-fit: cover;
 }
 
 .icons {
@@ -119,6 +122,7 @@
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.533);
   position: fixed;
+  inset: 0;
 }
 
 .modal {
@@ -127,20 +131,20 @@
   align-items: center;
   flex-direction: column;
   width: 80vw;
-  height: 50vh;
+  height: 60vh;
   background-color: rgb(28, 26, 26);
   position: fixed;
   border-radius: 8px;
 }
 
-.EditTitle{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.7rem;
-    font-weight: bold;
-    color: #fff;
-    margin: 1.5rem;
+.EditTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 1.5rem;
 }
 
 .btnEditContainer {
@@ -148,23 +152,97 @@
   justify-content: center;
   align-items: center;
   width: 30%;
-  gap: .5rem;
-  margin-top: .5rem;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-.buttonEdit{
-    width: 100%;
-    height: 2rem;
-    margin: auto;
-    background-color: #6dbb5a;
-    border: none;
-    border-radius: 0.5rem;
-    color: #fff;
-    font-size: min(1.5rem, 1.5vw);
-    font-weight: bold;
-    cursor: pointer;
+.labelInputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+  margin: 1rem 0;
 }
 
-.editClose{
-    background-color: #cd6311;
+@media (max-width: 768px) {
+  .labelInputContainer {
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+}
+
+.labelEdit {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 20%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+@media (max-width: 651px) {
+  .labelEdit {
+    width: 30%;
+  }
+}
+
+.buttonEdit {
+  width: 100%;
+  height: 2rem;
+  margin: auto;
+  background-color: #6dbb5a;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: min(1.5rem, 1.5vw);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.editClose {
+  background-color: #cd6311;
+}
+
+
+.msg{
+  display:none;
+}
+
+.msgAdd{
+  display: none;
+}
+
+.msgSuccess{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  width: 35vw;
+  padding: 1rem;
+  height: 4rem;
+  margin: 1rem 1rem;
+  position: fixed;
+  background-color: #6dbb5a;
+  border-radius: 15px;
+  color: #fff;
+  animation: msgSuccess ease-in-out 3s;
+}
+
+@keyframes msgSuccess {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
 }
