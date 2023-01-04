@@ -1,7 +1,7 @@
 .header{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100vw;
     height: 20vh;
     inset: 0;
@@ -16,6 +16,7 @@
 }
 
 .list li{
+    font-size: min(1.3rem, 1.5vw);
     list-style: none;
     margin: 0 1vw;
     cursor: pointer;
@@ -25,4 +26,29 @@
 .list li a{
     text-decoration: none;
     color: rgb(21, 82, 27);
+}
+
+
+@media (max-width: 1250px){
+    .header{
+        flex-direction: column;
+    }
+}
+
+
+@media (max-width: 900px){
+    .header{
+        position: relative;
+        height: 40vh;
+    }
+    .list{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        flex-direction: column;
+        height: 20vh;
+    }
+    .list li{
+        font-size: 1rem;
+        margin: 0;
+    }
 }

@@ -73,6 +73,13 @@
   width: 100%;
 }
 
+.inputErrorContainer p {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0.5rem;
+}
+
 /* Cards */
 .crudCards {
   display: grid;

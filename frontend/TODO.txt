@@ -1,7 +1,8 @@
 
 ## GERAL
-* Ajustar layout
 * Enxugar toda aplicação
+* Documentar API com storybook
+* Fazer alguns testes (jest, testing-library ou com storybook)
 
 ## STATUS CODE
 * Ajustar funcionalidades. Ex: Img sem status code.

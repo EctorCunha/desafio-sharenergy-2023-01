@@ -1,5 +1,3 @@
-
-
 * Fazer funcionar o remember-me
-* Enxugar toda aplicação
 * Corrigir token (está em string)
+* Documentar API com Swegger

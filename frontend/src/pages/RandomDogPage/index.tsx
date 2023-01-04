@@ -20,7 +20,7 @@ export function RandomDog() {
     <BackToHome/>
     <div className="randomDogContainer">
       <h1>Imagem aleatória da API Random Dog</h1>
-      <button className="btn" onClick={handleClick}>
+      <button className="btnRandomDog" onClick={handleClick}>
         Gerar Imagem
       </button>
       {randomImage.message && (

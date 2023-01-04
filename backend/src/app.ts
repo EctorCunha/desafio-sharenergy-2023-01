@@ -1,13 +1,10 @@
-// config inicial
 import express from "express";
 import cors from "cors";
 import logger from "morgan";
-import { userRoutes } from "./Routes/userRoutes";
 import { loginRoutes } from "./Routes/loginRoutes";
 import { registerRoutes } from "./Routes/registerRoutes";
 import { authRoute } from "./Routes/auth.route";
 
-// import personRoutes from './routes/personRoutes'
 export const app = express();
 
 // forma de ler JSON / middlewares
@@ -22,7 +19,6 @@ app.use(cors());
 app.use(logger("dev"));
 
 // Integra o endpoint na aplicação
-app.use("/user", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
 app.use("/auth", authRoute);

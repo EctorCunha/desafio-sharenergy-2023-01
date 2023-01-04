@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { BackToHome } from "../../components/BackToHome";
 import axios from "axios";
+import { BackToHome } from "../../components/BackToHome";
 import edit from "../../assets/edit.svg";
 import trash from "../../assets/trash.svg";
 import "./crudPage.css";
@@ -36,6 +36,7 @@ export function CrudPage() {
   const [atualize, setAtualize] = useState(false);
   const [clickedEdit, setClickedEdit] = useState(false);
   const [selectedCard, setSelectedCard] = useState({} as IRegister);
+  const msgSuccess = document.querySelector(".msg");
 
   function getData() {
     try {
@@ -51,15 +52,6 @@ export function CrudPage() {
     const { name, value } = ev.target;
     setValues({ ...values, [name]: value });
   }
-
-  const messageCPF = "O CPF deve conter 11 dígitos";
-  const messageCPF2 = "Não pode ser maior que 11 dígitos";
-  const messageEmail = "O email deve conter @ e .";
-  const erro = document.querySelector("#erro");
-  const erroEmail = document.querySelector("#erroEmail");
-  const classMsgSuccess = document.querySelector(".msgSuccess");
-  const msgSuccess = document.querySelector(".msg");
-
 
   function modalClickEdit() {
     setClickedEdit(!clickedEdit);
@@ -80,16 +72,6 @@ export function CrudPage() {
     } catch {
       alert("Houve um erro ao inserir os dados");
     }
-    
-    if (values.cpf.length < 11) {
-      erro.textContent = messageCPF;
-    } else if(values.cpf.length > 12){
-      erro.textContent = messageCPF2
-    } 
-
-    if (values.email.length === 0) {
-      erroEmail.textContent = messageEmail;
-    } 
   }
 
   function handleEditUser(id: any): void {
@@ -107,13 +89,12 @@ export function CrudPage() {
         setClickedEdit(!clickedEdit);
         msgSuccess?.classList.add("msgSuccess");
       });
-      
-      if(msgSuccess){
-        setTimeout(() => {
-          msgSuccess.classList.remove("msgSuccess");
-        }, 3000);
-      }
 
+    if (msgSuccess) {
+      setTimeout(() => {
+        msgSuccess.classList.remove("msgSuccess");
+      }, 3000);
+    }
   }
 
   function handleDeleteUser(id: string): void {
@@ -123,10 +104,6 @@ export function CrudPage() {
       });
       return;
     }
-  }
-
-  if( !values.cpf){
-    handleAddUser = false
   }
 
   useEffect(() => {
@@ -142,14 +119,15 @@ export function CrudPage() {
           <h1 className="titleCrud">CRUD</h1>
 
           <div className="inputErrorContainer">
-          <input
-            className="inputCrud"
-            onChange={onChange}
-            name="name"
-            type="text"
-            placeholder="Nome"
-            value={values.name}
-          />
+            <p>Todos os campos são obrigatórios</p>
+            <input
+              className="inputCrud"
+              onChange={onChange}
+              name="name"
+              type="text"
+              placeholder="Nome"
+              value={values.name}
+            />
           </div>
 
           <div className="inputErrorContainer">
@@ -162,29 +140,32 @@ export function CrudPage() {
               required
               value={values.email}
             />
-              <span id='erroEmail' style={{ color: "red", fontSize: ".8rem" }}></span>
+            <span
+              id="erroEmail"
+              style={{ color: "red", fontSize: ".8rem" }}
+            ></span>
           </div>
 
           <div className="inputErrorContainer">
-          <input
-            className="inputCrud"
-            onChange={onChange}
-            name="telephone"
-            type="text"
-            placeholder="Telefone"
-            value={values.telephone}
-          />
+            <input
+              className="inputCrud"
+              onChange={onChange}
+              name="telephone"
+              type="text"
+              placeholder="Telefone"
+              value={values.telephone}
+            />
           </div>
 
           <div className="inputErrorContainer">
-          <input
-            className="inputCrud"
-            onChange={onChange}
-            name="address"
-            type="text"
-            placeholder="Endereço"
-            value={values.address}
-          />
+            <input
+              className="inputCrud"
+              onChange={onChange}
+              name="address"
+              type="text"
+              placeholder="Endereço"
+              value={values.address}
+            />
           </div>
 
           <div className="inputErrorContainer">
@@ -197,7 +178,7 @@ export function CrudPage() {
               required
               value={values.cpf}
             />
-            <span id='erro' style={{ color: "red", fontSize: ".8rem" }}></span>
+            <span id="erro" style={{ color: "red", fontSize: ".8rem" }}></span>
           </div>
           <div className="formBtn">
             <button className="btnCrud" onClick={handleAddUser} type="submit">
@@ -237,7 +218,7 @@ export function CrudPage() {
           </div>
         ))}
       </div>
-      
+
       {/* <span className="msgAdd">Dados inseridos com sucesso</span> */}
       <span className="msg">Dados atualizados com sucesso</span>
 

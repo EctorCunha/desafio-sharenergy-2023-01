@@ -87,6 +87,11 @@
     gap: 2rem;
 }
 
+#people{
+  border-radius: 5px;
+  background-color: aliceblue;
+}
+
 /* Tabela */
 table{
     width: 90vw;

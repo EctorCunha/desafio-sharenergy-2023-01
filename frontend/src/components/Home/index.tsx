@@ -1,4 +1,4 @@
-import { Header } from "../../components/Header";
+import { Header } from "../Header";
 import "./home.css";
 
 export function Home() {
@@ -6,7 +6,7 @@ export function Home() {
     <>
       <Header />
       <div className="homePage">
-        <h1>Desafio SHARENERGY</h1>
+        <h1>Desafio SHARENERGY by Ector Cunha</h1>
       </div>
     </>
   );

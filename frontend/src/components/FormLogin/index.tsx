@@ -47,7 +47,6 @@ export function FormLogin() {
   }
 
   return (
-    <div>
       <form className="form" onChange={onChange}>
         <label className="label" htmlFor="email">
           Username:
@@ -83,10 +82,9 @@ export function FormLogin() {
             Lembrar-me
           </label>
         </div>
-        <button onClick={handleSubmit} className="btn" type="submit">
+        <button onClick={handleSubmit} className="btnLogin" type="submit">
           Entrar
         </button>
       </form>
-    </div>
   );
 }

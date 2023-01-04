@@ -55,7 +55,7 @@ registerRoutes.get("/:id", async (req, res) => {
 });
 
 // ========== UPDATE ==================
-registerRoutes.put("/:id", async (req, res) => {
+registerRoutes.put("/:id", async (req: any, res: any) => {
   const id = req.params.id;
 
   const { name, email, telephone, address, cpf } = req.body;
