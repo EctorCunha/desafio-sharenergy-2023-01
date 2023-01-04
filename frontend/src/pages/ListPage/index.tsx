@@ -15,15 +15,13 @@ interface IUser {
     medium: string;
   };
   email: string;
-  login:{
+  login: {
     username: string;
-  }
+  };
   registered: {
     age: number;
   };
 }
-
-
 
 export function ListPage() {
   // Recebe os dados da API
@@ -34,7 +32,7 @@ export function ListPage() {
   const [loading, setLoading] = useState(false);
 
   // Busca
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
 
   // Paginação
   const [itensPerPage, setItensPerPage] = useState(10);
@@ -44,42 +42,32 @@ export function ListPage() {
   const endIndex = startIndex + itensPerPage;
   const currentItens = userData.slice(startIndex, endIndex);
 
-
   function getData() {
     try {
-      axios.get(`https://randomuser.me/api/?page=3&results=5000`).then((response) => {
-        setLoading(true);
-        setUserData(response.data.results);
-      });
-
+      axios
+        .get(`https://randomuser.me/api/?page=3&results=500`)
+        .then((response) => {
+          setLoading(true);
+          setUserData(response.data.results);
+        });
     } catch (error) {
       alert("Não foi possível obter os dados");
     }
   }
 
-  function handleSearch() {
-    axios.get(`https://randomuser.me/api/?page=0&results=5000`).then((response) => {
-      setSearch(response.data.results.name.first);
-      setAtualize(!atualize);
-    });
-  }
 
-  const mapeado = userData.map((item:any) => item.name.first)
-  console.log(mapeado)
-
-  const busca = mapeado.filter((fruta:any) => fruta.startsWith(search))
-  console.log(busca)
-
-
-// const searchFind = userData.filter((item:any)=> item.name.first.toLowerCase().includes(search.toLowerCase()) || item.name.last.toLowerCase().includes(search.toLowerCase()) || item.email.toLowerCase().includes(search.toLowerCase()) || item.login.username.toLowerCase().includes(search.toLowerCase()))
-// console.log(searchFind)
-
+  const filtered = currentItens.filter(
+    (item: any) =>
+      item.name.first.toLowerCase().includes(search.toLowerCase()) ||
+      item.name.last.toLowerCase().includes(search.toLowerCase()) ||
+      item.email.toLowerCase().includes(search.toLowerCase()) ||
+      item.login.username.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     getData();
     setCurrentPage(0);
   }, [atualize, itensPerPage]);
-
 
   return (
     <section id="containerListPage">
@@ -96,25 +84,16 @@ export function ListPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          </div>
-        
-        <button
-          className="bntCadastrar"
-          // onClick={handleSearch}
-          // type="submit"
-        >
-          Pesquisar
-        </button>
+        </div>
       </section>
-
 
       <div className="peoplePerPage">
         <h4>Defina a quantidade de pessoas por tabela</h4>
-        <select 
-        name="people" 
-        id="people"
-        value={itensPerPage}
-        onChange={(e) => setItensPerPage(Number(e.target.value))}
+        <select
+          name="people"
+          id="people"
+          value={itensPerPage}
+          onChange={(e) => setItensPerPage(Number(e.target.value))}
         >
           <option value={5}>5</option>
           <option value={10}>10</option>
@@ -124,10 +103,8 @@ export function ListPage() {
         </select>
       </div>
 
-
-      {
-        loading ? (
-          <table>
+      {loading && filtered ? (
+        <table>
           <thead>
             <tr>
               <th>Nome Completo</th>
@@ -137,10 +114,12 @@ export function ListPage() {
               <th>Idade</th>
             </tr>
           </thead>
-          {currentItens.map((data) => (
+          {filtered.map((data) => (
             <tbody key={data.email}>
               <tr>
-                <td>{data.name.first} {data.name.last}</td>
+                <td>
+                  {data.name.first} {data.name.last}
+                </td>
                 <td>
                   <img
                     style={{ width: "5rem", height: "5rem" }}
@@ -155,18 +134,12 @@ export function ListPage() {
             </tbody>
           ))}
         </table>
-        ) 
-        : 
-        <Loading/>
-      }
+      ) : (
+        <Loading />
+      )}
 
-      
       <div className="tableContainer">
-        
-        <Pagination
-          pages={pages}
-          setCurrentPage={setCurrentPage}
-        />
+        <Pagination pages={pages} setCurrentPage={setCurrentPage} />
       </div>
     </section>
   );
