@@ -1,10 +1,10 @@
 
 ## GERAL
 * Ajustar layout
+* Enxugar toda aplicação
 
 ## STATUS CODE
 * Ajustar funcionalidades. Ex: Img sem status code.
 
 ## Login
-* Trocar a rota listPage (rota protegida)
 * Login (autenticação usando a rota auth/login)

@@ -70,7 +70,6 @@ export function CrudPage() {
     setSelectedCard({ ...selectedCard, [name]: value });
   }
 
-
   function handleAddUser(e: any) {
     e.preventDefault();
     try {
@@ -78,17 +77,10 @@ export function CrudPage() {
         setAtualize(!atualize);
       });
       setValues(initialValues);
-      // msgSuccess?.classList.add("msgSuccess");
     } catch {
       alert("Houve um erro ao inserir os dados");
     }
-
-    // if(msgSuccess){
-    //   setTimeout(() => {
-    //     msgSuccess.classList.remove("msgSuccess");
-    //   }, 3000);
-    // }
-
+    
     if (values.cpf.length < 11) {
       erro.textContent = messageCPF;
     } else if(values.cpf.length > 12){
@@ -99,7 +91,6 @@ export function CrudPage() {
       erroEmail.textContent = messageEmail;
     } 
   }
-
 
   function handleEditUser(id: any): void {
     fetch(`http://localhost:5000/register/${id}`, {
@@ -123,9 +114,8 @@ export function CrudPage() {
         }, 3000);
       }
 
-    }
+  }
 
-  
   function handleDeleteUser(id: string): void {
     if (confirm("Deseja mesmo excluir este card ?")) {
       axios.delete(`http://localhost:5000/register/${id}`).then(() => {

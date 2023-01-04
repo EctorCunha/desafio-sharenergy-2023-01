@@ -6,11 +6,28 @@ const ObjectId = Schema.Types.ObjectId;
 
 const RegisterSchema = new Schema({
     id: ObjectId,
-    name: String,
-    email: String,
-    telephone: String,
-    address: String,
-    cpf: String,
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    telephone: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    cpf: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 
 })
 

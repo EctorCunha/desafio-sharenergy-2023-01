@@ -6,12 +6,30 @@ const ObjectId = Schema.Types.ObjectId;
 
 const UserSchema = new Schema({
     id: ObjectId,
-    fullName: String,
-    photo: String,
-    email: String,
-    username: String,
-    password: String,
-    age: Number,
+    fullName: {
+        type: String,
+        required: true,
+    },
+    photo: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    age: {
+        type: Number,
+    },
 })
 
 

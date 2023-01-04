@@ -1,6 +1,5 @@
 
-Rota protegida para lista de usuários após login (list page)
-
 
 * Fazer funcionar o remember-me
-* Fazer API com paginação
+* Enxugar toda aplicação
+* Corrigir token (está em string)

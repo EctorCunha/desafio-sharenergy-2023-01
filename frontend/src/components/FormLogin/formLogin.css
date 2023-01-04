@@ -13,6 +13,7 @@
     display: flex;
     width: 40vw;
     text-align: center;
+    color: aliceblue;
 }
 
 .input{
@@ -21,6 +22,7 @@
     margin: 1vh 0 4vh 0;
     border: none;
     border-radius: 8px;
+    padding: 1rem;
 }
 
 #rememberMeContainer{
@@ -29,6 +31,7 @@
     justify-content: space-between;
     gap: .7rem;
     margin-bottom: .7rem;
+    color: aliceblue;
 }
 
 .btn{

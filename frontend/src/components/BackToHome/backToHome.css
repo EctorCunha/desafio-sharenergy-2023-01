@@ -1,5 +1,5 @@
 .backToHome{
-    position: fixed;
+    position: absolute;
     inset: 0;
     width: 20vw;
     height: 5vw;

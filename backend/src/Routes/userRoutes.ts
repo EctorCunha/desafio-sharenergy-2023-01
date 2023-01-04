@@ -28,15 +28,49 @@ userRoutes.post("/", async (req, res) => {
   }
 });
 
-// ============ READ ===================
-userRoutes.get("/", async ({ req, res }: any) => {
+// ============ READ with limit and offset - query ================
+userRoutes.get("/", async (req:any, res:any) => {
+  let { limit, offset } = req.query;
+
+   limit = parseInt(limit);
+   offset = parseInt(offset);
+
+  if(!limit) limit = 10;
+  if(!offset) offset = 0;
+
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const users = await User.find().sort({_id: -1}).limit(limit).skip(offset);
+    const total = await User.countDocuments();
+    const currentUrl = req.baseUrl;
+
+    const next = offset + limit;
+    const nextUrl = next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
+
+    const prev = offset - limit < 0 ? null : offset - limit;
+    const prevUrl = prev != null ? `${currentUrl}?limit=${limit}&offset=${prev}`: null;
+
+    res.status(200).json({
+      nextUrl, 
+      prevUrl, 
+      limit, 
+      offset, 
+      total, 
+      results:
+        users.map((user) => ({
+          id: user._id,
+          fullName: user.fullName,
+          photo: user.photo,
+          email: user.email,
+          username: user.username,
+          password: user.password,
+          age: user.age,
+        }))
+    });
+    
   } catch (error) {
     res.status(500).json({ error: error });
   }
-});
+})
 
 userRoutes.get("/:id", async (req, res) => {
 
