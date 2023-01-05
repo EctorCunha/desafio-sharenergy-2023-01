@@ -4,6 +4,7 @@ import { BackToHome } from "../../components/BackToHome";
 import edit from "../../assets/edit.svg";
 import trash from "../../assets/trash.svg";
 import "./crudPage.css";
+import { api } from "../../services/api";
 
 interface IRegister {
   _id: string;
@@ -40,7 +41,7 @@ export function CrudPage() {
 
   function getData() {
     try {
-      axios.get("http://localhost:5000/register").then((response) => {
+      api.get("/register").then((response) => {
         setUserData(response.data);
       });
     } catch (error) {
@@ -65,7 +66,7 @@ export function CrudPage() {
   function handleAddUser(e: any) {
     e.preventDefault();
     try {
-      axios.post("http://localhost:5000/register", values).then(() => {
+      api.post("/register", values).then(() => {
         setAtualize(!atualize);
       });
       setValues(initialValues);
@@ -99,7 +100,7 @@ export function CrudPage() {
 
   function handleDeleteUser(id: string): void {
     if (confirm("Deseja mesmo excluir este card ?")) {
-      axios.delete(`http://localhost:5000/register/${id}`).then(() => {
+      api.delete(`/register/${id}`).then(() => {
         setAtualize(!atualize);
       });
       return;
@@ -219,7 +220,6 @@ export function CrudPage() {
         ))}
       </div>
 
-      {/* <span className="msgAdd">Dados inseridos com sucesso</span> */}
       <span className="msg">Dados atualizados com sucesso</span>
 
       {clickedEdit ? (

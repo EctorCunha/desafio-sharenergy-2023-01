@@ -1,3 +1,7 @@
+
+
+* Fazer token expirar mais rápido
 * Fazer funcionar o remember-me
+* Implementar o logout (listPage)
+
 * Corrigir token (está em string)
-* Documentar API com Swegger

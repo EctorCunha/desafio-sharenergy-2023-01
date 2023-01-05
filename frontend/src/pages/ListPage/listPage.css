@@ -6,6 +6,30 @@
   /* width: 100vw; */
 }
 
+.logoutContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 10vw;
+  height: 5vh;
+  border: none;
+  border-radius: 6px;
+  margin: .3rem 0;
+  background-color: #5ab4bb;
+  position: absolute;
+  top: 0;
+  right: 3rem;
+  cursor: pointer;
+}
+
+.logout{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
 .h1Titulo {
   display: flex;
   justify-content: center;

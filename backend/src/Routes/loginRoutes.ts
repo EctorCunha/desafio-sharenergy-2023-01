@@ -24,7 +24,7 @@ loginRoutes.post("/login", async (req, res) => {
 
     res.status(201).json({ message: "Usuário criado" });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ message: "Não foi possível criar usuário (Username já existente)" });
   }
 });
 
@@ -35,7 +35,7 @@ loginRoutes.get("/", async (req, res) => {
     const login = await Login.find();
     res.status(200).json(login);
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ message: "Não há usuários" });
   }
 });
 
@@ -56,7 +56,7 @@ loginRoutes.delete("/:id", async (req, res) => {
 
     res.status(200).json({ message: "Usuário deletado" });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ message: "Não foi possível deletar usuário" });
   }
 });
 

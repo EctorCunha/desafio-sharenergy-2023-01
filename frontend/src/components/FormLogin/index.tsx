@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 import { validarUsername } from "../../Utils/validadores";
 import { validarPassword } from "../../Utils/validadores";
+import {login, logout, nomeUsuario} from "../../services/auth";
 import "./formLogin.css";
 
 interface IFields {
@@ -17,6 +19,7 @@ const initialFields: IFields = {
 
 export function FormLogin() {
   const [fields, setFields] = useState(initialFields);
+  const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -25,49 +28,84 @@ export function FormLogin() {
     setFields({ ...fields, [name]: value });
   }
 
+  function handleLogin(e:any){
+    e.preventDefault();
+    try {
+      api.post("/auth/login", fields)
+    .then((res) => {
+        if(res.data.token){
+          login(res.data.token);
+          navigate("/listPage");
+        } else if(!res.data.token){
+          alert("Usuário ou Senha não encontrados");
+        }
+    });
+
+    if(fields.username === "" || fields.password === ""){
+      alert("Preencha todos os campos");
+    }
+    } catch {
+      alert("Houve um erro no login");
+    }
+    setFields(initialFields);
+
+    
+  }
+
+
   function handleSubmit(e: any) {
     e.preventDefault();
 
 
     try {
-      axios.post("http://localhost:5000/auth/login", fields).then((res) => {
-        console.log(res.data);
+      api.post("/auth/login", fields)
+      .then((res) => {
+        console.log(res.data)
         localStorage.setItem("token", res.data.token);
         if (localStorage.getItem("token")) {
           navigate("/listPage");
-        } else {
+        } else if(!localStorage.getItem("token")){
+          navigate("/login")
+        } 
+        else {
           alert("Usuário ou Senha não encontrados");
         }
       });
     } catch {
-      alert("Houve um erro");
+      alert("Houve um erro no login");
     }
 
     setFields(initialFields);
   }
 
+
+
   return (
-      <form className="form" onChange={onChange}>
+      <form className="form">
         <label className="label" htmlFor="email">
           Username:
         </label>
         <input
+        onChange={onChange}
           className="input"
           type="text"
           name="username"
           id="username"
           value={fields.username}
+          autoComplete="username"
           required
         />
         <label className="label" htmlFor="password">
           Senha:
         </label>
         <input
+        onChange={onChange}
           className="input"
           type="password"
           name="password"
           id="password"
           value={fields.password}
+          autoComplete="current-password"
           required
         />
 
@@ -82,7 +120,7 @@ export function FormLogin() {
             Lembrar-me
           </label>
         </div>
-        <button onClick={handleSubmit} className="btnLogin" type="submit">
+        <button onClick={handleLogin} className="btnLogin" type="submit">
           Entrar
         </button>
       </form>

@@ -4,6 +4,8 @@ import { BackToHome } from "../../components/BackToHome";
 import { Pagination } from "../../components/Pagination";
 import { Loading } from "../../components/Loading";
 import "./listPage.css";
+import { logout } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 interface IUser {
   name: {
@@ -33,6 +35,7 @@ export function ListPage() {
 
   // Busca
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   // Paginação
   const [itensPerPage, setItensPerPage] = useState(10);
@@ -55,7 +58,6 @@ export function ListPage() {
     }
   }
 
-
   const filtered = currentItens.filter(
     (item: any) =>
       item.name.first.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,6 +65,11 @@ export function ListPage() {
       item.email.toLowerCase().includes(search.toLowerCase()) ||
       item.login.username.toLowerCase().includes(search.toLowerCase())
   );
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
 
   useEffect(() => {
     getData();
@@ -72,6 +79,7 @@ export function ListPage() {
   return (
     <section id="containerListPage">
       <BackToHome />
+      <div className="logoutContainer"><span className="logout" onClick={handleLogout}>Logout</span></div>
       <h1 className="h1Titulo">Lista de usuários</h1>
       <section className="formListPage">
         <h2 className="titleForm">Faça sua busca aqui</h2>
