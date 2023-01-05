@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { BackToHome } from "../../components/BackToHome";
-import edit from "../../assets/edit.svg";
-import trash from "../../assets/trash.svg";
-import "./crudPage.css";
 import { api } from "../../services/api";
+import { BackToHome } from "../../components/BackToHome";
+import { IconsCrud } from "../../components/ButtonsCrud";
+import "./crudPage.css";
 
 interface IRegister {
   _id: string;
@@ -35,8 +33,10 @@ export function CrudPage() {
   const [userData, setUserData] = useState([] as IRegister[]);
   const [values, setValues] = useState(initialValues);
   const [atualize, setAtualize] = useState(false);
-  const [clickedEdit, setClickedEdit] = useState(false);
   const [selectedCard, setSelectedCard] = useState({} as IRegister);
+  const [clickedView, setClickedView] = useState(false);
+  const [clickedEdit, setClickedEdit] = useState(false);
+  const [clickedDelete, setClickedDelete] = useState(false);
   const msgSuccess = document.querySelector(".msg");
 
   function getData() {
@@ -54,8 +54,16 @@ export function CrudPage() {
     setValues({ ...values, [name]: value });
   }
 
+  function modalClickView() {
+    setClickedView(!clickedView);
+  }
+
   function modalClickEdit() {
     setClickedEdit(!clickedEdit);
+  }
+
+  function modalClickDelete() {
+    setClickedDelete(!clickedDelete);
   }
 
   function onEditChange(ev: any) {
@@ -99,12 +107,10 @@ export function CrudPage() {
   }
 
   function handleDeleteUser(id: string): void {
-    if (confirm("Deseja mesmo excluir este card ?")) {
-      api.delete(`/register/${id}`).then(() => {
-        setAtualize(!atualize);
-      });
-      return;
-    }
+    api.delete(`/register/${id}`).then(() => {
+      setAtualize(!atualize);
+      setClickedDelete(!clickedDelete);
+    });
   }
 
   useEffect(() => {
@@ -200,27 +206,71 @@ export function CrudPage() {
             <p>E-mail: {user.email}</p>
             <p>Telefone: {user.telephone}</p>
             <p>Endereço: {user.address}</p>
-            <p aria-required>CPF: {user.cpf}</p>
-            <div onClick={() => setSelectedCard(user)} className="icons">
-              <img
-                onClick={modalClickEdit}
-                className="icon"
-                src={edit}
-                alt="Icone de editar"
-              />
-              <img
-                onClick={() => handleDeleteUser(user._id!)}
-                className="icon delete"
-                src={trash}
-                alt="Icone de excluir"
-              />
-            </div>
-            <span>-------------</span>
+            <p>CPF: {user.cpf}</p>
+            <IconsCrud
+            modalClickView={modalClickView}
+            modalClickEdit={modalClickEdit}
+            modalClickDelete={modalClickDelete}
+            />
           </div>
         ))}
       </div>
 
       <span className="msg">Dados atualizados com sucesso</span>
+
+      {clickedView ? (
+        <>
+          {selectedCard !== null ? (
+            <div className="modalContainer">
+              <div className="modalView">
+                <div className="labelInputContainer">
+                  <label className="labelEdit" htmlFor="name">
+                    Nome:
+                  </label>
+                  <p className="inputCrud">{selectedCard.name}</p>
+                </div>
+
+                <div className="labelInputContainer">
+                  <label className="labelEdit" htmlFor="email">
+                    Email:
+                  </label>
+                  <p className="inputCrud">{selectedCard.email}</p>
+                </div>
+
+                <div className="labelInputContainer">
+                  <label className="labelEdit" htmlFor="telephone">
+                    Telefone:
+                  </label>
+                  <p className="inputCrud">{selectedCard.telephone}</p>
+                </div>
+
+                <div className="labelInputContainer">
+                  <label className="labelEdit" htmlFor="address">
+                    Endereço:
+                  </label>
+                  <p className="inputCrud">{selectedCard.address}</p>
+                </div>
+
+                <div className="labelInputContainer">
+                  <label className="labelEdit" htmlFor="cpf">
+                    CPF:
+                  </label>
+                  <p className="inputCrud">{selectedCard.cpf}</p>
+                </div>
+
+                <div className="btnEditContainer">
+                  <button
+                    className="buttonEdit editClose"
+                    onClick={modalClickView}
+                  >
+                    Fechar
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </>
+      ) : null}
 
       {clickedEdit ? (
         <div className="modalContainer">
@@ -310,6 +360,28 @@ export function CrudPage() {
                 onClick={() => setClickedEdit(false)}
               >
                 Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {clickedDelete ? (
+        <div className="modalContainer">
+          <div className="modalDelete">
+            <h2>Tem certeza que deseja excluir ?</h2>
+            <div className="btnEditContainer">
+              <button
+                className="buttonEdit"
+                onClick={() => handleDeleteUser(selectedCard._id!)}
+              >
+                Sim
+              </button>
+              <button
+                className="buttonEdit editClose"
+                onClick={() => setClickedDelete(false)}
+              >
+                Não
               </button>
             </div>
           </div>

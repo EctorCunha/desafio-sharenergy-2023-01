@@ -32,6 +32,8 @@
 }
 
 .inputCrud {
+  display: flex;
+  align-items: center;
   border: none;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -96,6 +98,7 @@
   justify-content: center;
   align-items: center;
   width: 20rem;
+  padding: 1rem;
   background-color: #bfc98b;
   border-radius: 8px;
 }
@@ -116,8 +119,8 @@
 
 .icon {
   cursor: pointer;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1rem;
   margin: 0 0.5rem 0 0.5rem;
 }
 
@@ -140,6 +143,31 @@
   width: 80vw;
   height: 60vh;
   background-color: rgb(28, 26, 26);
+  position: fixed;
+  border-radius: 8px;
+}
+
+.modalView{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60vw;
+  height: 50vh;
+  background-color: rgb(79, 111, 121);
+  position: fixed;
+  border-radius: 8px;
+}
+
+.modalDelete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60vw;
+  height:25vh;
+  gap: 1rem;
+  background-color: rgb(79, 111, 121);
   position: fixed;
   border-radius: 8px;
 }

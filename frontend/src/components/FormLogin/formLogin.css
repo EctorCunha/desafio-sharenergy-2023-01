@@ -36,7 +36,8 @@
 
 .btnLogin {
   width: 30%;
-  height: 5vh;
+  /* height: 5vh; */
+  padding: .5rem;
   background-color: #1e90ff;
   color: white;
   font-size: 1.25rem;

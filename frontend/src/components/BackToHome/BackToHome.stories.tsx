@@ -3,7 +3,7 @@ import { BackToHome } from "./index";
 
 export default {
     title: 'Components/BackToHome',
-    component: BackToHome,  
+    component: BackToHome,
 } as Meta;
 
 export const Default: StoryObj = {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BackToHome } from "../../components/BackToHome";
+import { ButtonRandomDog } from "../../components/ButtonRandomDog";
 import "./randomDog.css";
 
 interface RandomDogProps {
@@ -20,9 +21,7 @@ export function RandomDog() {
     <BackToHome/>
     <div className="randomDogContainer">
       <h1>Imagem aleatória da API Random Dog</h1>
-      <button className="btnRandomDog" onClick={handleClick}>
-        Gerar Imagem
-      </button>
+      <ButtonRandomDog handleClick={handleClick}/>
       {randomImage.message && (
         <img className="imagem" src={randomImage.message} alt="Imagem aleatória gerada pela API" />
       )}

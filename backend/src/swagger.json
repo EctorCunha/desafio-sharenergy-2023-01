@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Register API Documentation",
-    "description": "This is the documentation for the Register API",
+    "description": "Documentação para Register, Auth e Login",
     "termsOfService": "http://swagger.io/terms/",
     "version": "1.0.0"
   },
@@ -15,8 +15,8 @@
   "paths": {
     "/register/": {
       "post": {
-        "summary": "Register a new user",
-        "description": "Register a new user",
+        "summary": "Registrar um novo usuário",
+        "description": "Registrar um novo usuário",
         "tags": [
           "register"
         ],
@@ -62,27 +62,10 @@
     },
     "/register":{
       "get": {
-        "summary": "Get all users",
-        "description": "Get all users",
+        "summary": "Obter todos os usuários",
+        "description": "Obter todos os usuários",
         "tags": [
           "register"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "operationId": "getUsers",
         "responses": {
@@ -118,8 +101,8 @@
     },
     "/register/{id}/":{
       "put": {
-        "summary": "Update a user",
-        "description": "Update a user",
+        "summary": "Atualizar um usuário",
+        "description": "Atualizar um usuário",
         "tags": [
           "register"
         ],
@@ -165,8 +148,8 @@
     },
     "/register/{id}": {
       "delete": {
-        "summary": "Delete a user",
-        "description": "Delete a user",
+        "summary": "Deletar um usuário",
+        "description": "Deletar um usuário",
         "tags": [
           "register"
         ],
@@ -212,8 +195,8 @@
     },
     "/login/": {
       "post": {
-        "summary": "Login a user",
-        "description": "Login a user",
+        "summary": "Criar um login",
+        "description": "Criar um login",
         "tags": [
           "login"
         ],
@@ -256,8 +239,8 @@
     },
     "/login":{
       "get": {
-        "summary": "Get all users",
-        "description": "Get all users",
+        "summary": "Obter todos os logins",
+        "description": "Obter todos os login",
         "tags": [
           "login"
         ],
@@ -289,8 +272,8 @@
     },
     "/login/{id}":{
       "delete": {
-        "summary": "Delete a user",
-        "description": "Delete a user",
+        "summary": "Deletar um login",
+        "description": "Deletar um login",
         "tags": [
           "login"
         ],
@@ -331,10 +314,10 @@
         }
       }
     },
-    "/auth": {
+    "/auth/login": {
       "post": {
-        "summary": "Authenticate a user",
-        "description": "Authenticate a user",
+        "summary": "Autenticar um usuário",
+        "description": "Autenticar um usuário",
         "tags": [
           "auth"
         ],

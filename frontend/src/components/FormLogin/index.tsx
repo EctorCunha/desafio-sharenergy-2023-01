@@ -1,10 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import { validarUsername } from "../../Utils/validadores";
-import { validarPassword } from "../../Utils/validadores";
 import {login, logout, nomeUsuario} from "../../services/auth";
+import { ButtonLogin } from "../ButtonLogin";
 import "./formLogin.css";
 
 interface IFields {
@@ -120,9 +118,7 @@ export function FormLogin() {
             Lembrar-me
           </label>
         </div>
-        <button onClick={handleLogin} className="btnLogin" type="submit">
-          Entrar
-        </button>
+        <ButtonLogin handleLogin={handleLogin}/>
       </form>
   );
 }
