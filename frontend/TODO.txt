@@ -1,8 +1,7 @@
 
-## GERAL
-* Fazer alguns testes (jest, testing-library)
-
 ## Login
 * Login (autenticação usando a rota auth/login)
 * Remerber-me
+
+### Revisar requisitos da aplicação
 

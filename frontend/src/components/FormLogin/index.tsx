@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import {login, logout, nomeUsuario} from "../../services/auth";
+import {login} from "../../services/auth";
 import { ButtonLogin } from "../ButtonLogin";
 import "./formLogin.css";
 
@@ -50,7 +50,6 @@ export function FormLogin() {
     
   }
 
-
   function handleSubmit(e: any) {
     e.preventDefault();
 
@@ -76,39 +75,42 @@ export function FormLogin() {
     setFields(initialFields);
   }
 
-
-
   return (
       <form className="form">
         <label className="label" htmlFor="email">
           Username:
         </label>
         <input
-        onChange={onChange}
+          onChange={onChange}
+          data-testid="form-field"
           className="input"
           type="text"
           name="username"
           id="username"
           value={fields.username}
           autoComplete="username"
+          placeholder="Digite seu username"
           required
         />
         <label className="label" htmlFor="password">
           Senha:
         </label>
         <input
-        onChange={onChange}
+          onChange={onChange}
+          data-testid="form-field"
           className="input"
           type="password"
           name="password"
           id="password"
           value={fields.password}
           autoComplete="current-password"
+          placeholder="Digite sua senha"
           required
         />
 
         <div id="rememberMeContainer">
           <input
+            data-testid="form-checkbox"
             className="checkbox"
             type="checkbox"
             name="checkbox"

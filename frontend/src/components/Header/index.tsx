@@ -6,7 +6,6 @@ export function Header (){
         <h1>Desafio SHARENERGY</h1>
         <ul className='list'>
             <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
             <li><a href="/listPage">Lista de usuários</a></li>
             <li><a href="/randomDog">Random Dog</a></li>
             <li><a href="/statusCode">Status Code</a></li>
