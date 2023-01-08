@@ -58,7 +58,7 @@ export function ListPage() {
     }
   }
 
-  const filtered = currentItens.filter(
+  const dataWithFilter = currentItens.filter(
     (item: any) =>
       item.name.first.toLowerCase().includes(search.toLowerCase()) ||
       item.name.last.toLowerCase().includes(search.toLowerCase()) ||
@@ -111,7 +111,7 @@ export function ListPage() {
         </select>
       </div>
 
-      {loading && filtered ? (
+      {loading && dataWithFilter ? (
         <table>
           <thead>
             <tr>
@@ -122,7 +122,7 @@ export function ListPage() {
               <th>Idade</th>
             </tr>
           </thead>
-          {filtered.map((data) => (
+          {dataWithFilter.map((data) => (
             <tbody key={data.email}>
               <tr>
                 <td>

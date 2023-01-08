@@ -1,7 +1,7 @@
 
 ## Login
-* Login (autenticação usando a rota auth/login)
+- Token não está expirando
+
 * Remerber-me
-
-### Revisar requisitos da aplicação
-
+- Se tiver token, entrar
+- Se tiver token e marcar o checkbox, salvar no localStorage

@@ -5,7 +5,7 @@ import { Home } from "./components/Home";
 import { ListPage } from "./pages/ListPage";
 import { LoginPage } from "./pages/LoginPage";
 import { NotFound } from "./pages/NotFound";
-import { RandomDog } from "./pages/RandomDogPage";
+import { RandomDogPage } from "./pages/RandomDogPage";
 import { StatusCodePage } from "./pages/StatusCodePage";
 import "./style/global.css";
 
@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/listPage" element={<PrivateRoute><ListPage /></PrivateRoute>} />
-        <Route path="/randomDog" element={<RandomDog />} />
+        <Route path="/randomDog" element={<RandomDogPage />} />
         <Route path="/statusCode" element={<StatusCodePage />} />
         <Route path="/crudPage" element={<CrudPage />} />
         <Route path="*" element={<NotFound />} />

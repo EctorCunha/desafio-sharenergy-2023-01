@@ -202,15 +202,45 @@ export function CrudPage() {
             className="userInfos"
             key={user.cpf}
           >
-            <h1 className="name">Nome: {user.name}</h1>
-            <p>E-mail: {user.email}</p>
-            <p>Telefone: {user.telephone}</p>
-            <p>Endereço: {user.address}</p>
-            <p>CPF: {user.cpf}</p>
+            <div className="labelCard">
+              <label className="labelFields" htmlFor="">
+                Nome:{" "}
+              </label>
+              <p className="fields">{user.name}</p>
+            </div>
+
+            <div className="labelCard">
+              <label className="labelFields" htmlFor="">
+                E-mail:
+              </label>
+              <p className="fields">{user.email}</p>
+            </div>
+
+            <div className="labelCard">
+              <label className="labelFields" htmlFor="">
+                Telefone:{" "}
+              </label>
+              <p className="fields">{user.telephone}</p>
+            </div>
+
+            <div className="labelCard">
+              <label className="labelFields" htmlFor="">
+                Endereço:{" "}
+              </label>
+              <p className="fields">{user.address}</p>
+            </div>
+
+            <div className="labelCard">
+              <label className="labelFields" htmlFor="">
+                CPF:{" "}
+              </label>
+              <p className="fields">CPF: {user.cpf}</p>
+            </div>
+
             <IconsCrud
-            modalClickView={modalClickView}
-            modalClickEdit={modalClickEdit}
-            modalClickDelete={modalClickDelete}
+              modalClickView={modalClickView}
+              modalClickEdit={modalClickEdit}
+              modalClickDelete={modalClickDelete}
             />
           </div>
         ))}

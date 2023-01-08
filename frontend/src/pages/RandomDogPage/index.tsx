@@ -7,7 +7,7 @@ interface RandomDogProps {
   message: string;
 }
 
-export function RandomDog() {
+export function RandomDogPage() {
   const [randomImage, setRandomImage] = useState({} as RandomDogProps);
 
   function handleClick() {

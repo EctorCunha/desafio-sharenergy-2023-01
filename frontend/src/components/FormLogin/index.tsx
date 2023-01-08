@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import {login} from "../../services/auth";
+import {login,isAuthenticated, remember, TOKEN_KEY} from "../../services/auth";
 import { ButtonLogin } from "../ButtonLogin";
 import "./formLogin.css";
 
@@ -17,8 +17,7 @@ const initialFields: IFields = {
 
 export function FormLogin() {
   const [fields, setFields] = useState(initialFields);
-  const [validated, setValidated] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState('');
   const navigate = useNavigate();
 
   function onChange(ev: any) {
@@ -31,48 +30,30 @@ export function FormLogin() {
     try {
       api.post("/auth/login", fields)
     .then((res) => {
-        if(res.data.token){
-          login(res.data.token);
-          navigate("/listPage");
-        } else if(!res.data.token){
-          alert("Usuário ou Senha não encontrados");
-        }
+      if(res.data.token){
+        login(res.data.token);
+        navigate("/listPage");
+      } else {
+        alert(res.data.message);
+      }
+      
+      setValidated(res.data.token);
     });
-
+    
     if(fields.username === "" || fields.password === ""){
-      alert("Preencha todos os campos");
+      alert("Por favor, preencha todos os campos");
     }
+
     } catch {
       alert("Houve um erro no login");
     }
     setFields(initialFields);
-
-    
   }
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-
-
-    try {
-      api.post("/auth/login", fields)
-      .then((res) => {
-        console.log(res.data)
-        localStorage.setItem("token", res.data.token);
-        if (localStorage.getItem("token")) {
-          navigate("/listPage");
-        } else if(!localStorage.getItem("token")){
-          navigate("/login")
-        } 
-        else {
-          alert("Usuário ou Senha não encontrados");
-        }
-      });
-    } catch {
-      alert("Houve um erro no login");
+  function hadleRemerberMe(e: any){
+    if(e.target.checked){
+      remember(TOKEN_KEY);
     }
-
-    setFields(initialFields);
   }
 
   return (
@@ -82,7 +63,7 @@ export function FormLogin() {
         </label>
         <input
           onChange={onChange}
-          data-testid="form-field"
+          data-testid="form-username"
           className="input"
           type="text"
           name="username"
@@ -97,7 +78,7 @@ export function FormLogin() {
         </label>
         <input
           onChange={onChange}
-          data-testid="form-field"
+          data-testid="form-password"
           className="input"
           type="password"
           name="password"
@@ -110,6 +91,7 @@ export function FormLogin() {
 
         <div id="rememberMeContainer">
           <input
+            onChange={hadleRemerberMe}
             data-testid="form-checkbox"
             className="checkbox"
             type="checkbox"
