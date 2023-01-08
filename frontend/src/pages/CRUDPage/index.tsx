@@ -143,7 +143,7 @@ export function CrudPage() {
               onChange={onChange}
               name="email"
               type="email"
-              placeholder="E-mail *"
+              placeholder="E-mail"
               required
               value={values.email}
             />
@@ -181,7 +181,7 @@ export function CrudPage() {
               onChange={onChange}
               name="cpf"
               type="text"
-              placeholder="CPF *"
+              placeholder="CPF"
               required
               value={values.cpf}
             />

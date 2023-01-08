@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 import { api } from "../../services/api";
-import {login,isAuthenticated, remember, TOKEN_KEY} from "../../services/auth";
+import {credential, login, remember, TOKEN_KEY} from "../../services/auth";
 import { ButtonLogin } from "../ButtonLogin";
 import "./formLogin.css";
 
@@ -17,47 +18,66 @@ const initialFields: IFields = {
 
 export function FormLogin() {
   const [fields, setFields] = useState(initialFields);
-  const [validated, setValidated] = useState('');
+  const [check, setCheck] = useState('');
+  const [errMsg, setErrMsg] = useState('')
+  const { setAuth }:any = useContext(AuthContext);
   const navigate = useNavigate();
 
   function onChange(ev: any) {
     const { name, value } = ev.target;
     setFields({ ...fields, [name]: value });
+
   }
 
-  function handleLogin(e:any){
-    e.preventDefault();
-    try {
-      api.post("/auth/login", fields)
-    .then((res) => {
-      if(res.data.token){
-        login(res.data.token);
-        navigate("/listPage");
-      } else {
-        alert(res.data.message);
-      }
-      
-      setValidated(res.data.token);
-    });
-    
-    if(fields.username === "" || fields.password === ""){
-      alert("Por favor, preencha todos os campos");
-    }
+  // function rememberMe(ev: any){
+  //   const rememberMe = localStorage.getItem(credential);
+  //   if(rememberMe){
+  //     const [username, password] = rememberMe.split(',');
+  //     setFields({username, password});
+  //   }
+  // }
 
-    } catch {
-      alert("Houve um erro no login");
+  async function handleSubmit (ev:any){
+    ev.preventDefault();
+
+    try {
+      // localStorage.getItem(credential)
+      const response = await api.post("/auth/login", fields);
+      const token = response?.data?.token;
+      setAuth({fields, token});
+      if(response.data.token){
+        login(response.data.token);
+        navigate("/listPage");
+      }
+
+    } catch (error:any) {
+      if(!error.response){
+        setErrMsg('No server response');
+      } else if(error.response.status === 401){
+        setErrMsg('Credenciais inválidas');
+      } else if(error.response.status === 500){
+        setErrMsg('Server error');
+      } else {
+        setErrMsg('Login error');
+      }
     }
-    setFields(initialFields);
   }
 
   function hadleRemerberMe(e: any){
+    setCheck(e.target.checked);
     if(e.target.checked){
-      remember(TOKEN_KEY);
+      remember(fields.username);
     }
   }
 
+  useEffect(() => {
+    setErrMsg('');
+    // rememberMe()
+  }, [fields]);
+
   return (
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
+        <p className={errMsg ? 'errmsg' : 'offscreen'}>{errMsg}</p>
         <label className="label" htmlFor="email">
           Username:
         </label>
@@ -97,12 +117,15 @@ export function FormLogin() {
             type="checkbox"
             name="checkbox"
             id="checkbox"
+            value={check}
           />
           <label className="remember-me" htmlFor="checkbox">
             Lembrar-me
           </label>
         </div>
-        <ButtonLogin handleLogin={handleLogin}/>
+        <ButtonLogin
+        //  handleLogin={handleLogin}
+         />
       </form>
   );
 }
