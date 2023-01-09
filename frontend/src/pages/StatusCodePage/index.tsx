@@ -7,10 +7,6 @@ export function StatusCodePage() {
     return `https://http.cat/${status}`;
   }
 
-  //   if(!getCatStatus){
-  //     return <img src={notFound}/>
-  //   }
-
   return (
     <>
       <BackToHome />

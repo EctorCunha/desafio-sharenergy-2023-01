@@ -13,13 +13,6 @@ interface IRegister {
   cpf: string | any;
 }
 
-// interface IFunctions {
-//   getData: () => void,
-//   handleAddUser: (e:any) => void,
-//   handleUpdateUser: (e:any) => void,
-//   handleDeleteUser: (id:string) => void,
-// }
-
 const initialValues: IRegister = {
   _id: "",
   name: "",

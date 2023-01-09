@@ -13,4 +13,4 @@ export const remember = (fields : string) => {
     localStorage.setItem(credential, fields);
 }
 
-export const logout = (token: string) => {localStorage.removeItem(TOKEN_KEY)}
+export const logout = () => {localStorage.removeItem(TOKEN_KEY)}
