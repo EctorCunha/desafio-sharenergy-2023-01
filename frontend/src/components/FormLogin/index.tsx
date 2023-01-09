@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import { api } from "../../services/api";
-import {credential, login, remember, TOKEN_KEY} from "../../services/auth";
+import {credential, login, remember} from "../../services/auth";
 import { ButtonLogin } from "../ButtonLogin";
 import "./formLogin.css";
 
@@ -26,22 +26,20 @@ export function FormLogin() {
   function onChange(ev: any) {
     const { name, value } = ev.target;
     setFields({ ...fields, [name]: value });
-
   }
 
-  // function rememberMe(ev: any){
-  //   const rememberMe = localStorage.getItem(credential);
-  //   if(rememberMe){
-  //     const [username, password] = rememberMe.split(',');
-  //     setFields({username, password});
-  //   }
-  // }
+  function rememberMe(){
+    const rememberMe = localStorage.getItem(credential);
+    console.log(rememberMe)
+    if(rememberMe){
+      const [username, password] = rememberMe.split(',');
+      setFields({username, password});
+    }
+  }
 
   async function handleSubmit (ev:any){
     ev.preventDefault();
-
     try {
-      // localStorage.getItem(credential)
       const response = await api.post("/auth/login", fields);
       const token = response?.data?.token;
       setAuth({fields, token});
@@ -63,7 +61,7 @@ export function FormLogin() {
     }
   }
 
-  function hadleRemerberMe(e: any){
+  function handleRemerberMe(e: any){
     setCheck(e.target.checked);
     if(e.target.checked){
       remember(fields.username);
@@ -72,8 +70,11 @@ export function FormLogin() {
 
   useEffect(() => {
     setErrMsg('');
-    // rememberMe()
   }, [fields]);
+
+  useEffect(() => {
+    rememberMe();
+  }, []);
 
   return (
       <form className="form" onSubmit={handleSubmit}>
@@ -111,7 +112,7 @@ export function FormLogin() {
 
         <div id="rememberMeContainer">
           <input
-            onChange={hadleRemerberMe}
+            onChange={handleRemerberMe}
             data-testid="form-checkbox"
             className="checkbox"
             type="checkbox"

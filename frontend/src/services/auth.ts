@@ -9,7 +9,7 @@ export const login = (token: string) => {
     localStorage.setItem(TOKEN_KEY, token);
 }
 
-export const remember = (fields :string) => {
+export const remember = (fields : string) => {
     localStorage.setItem(credential, fields);
 }
 
